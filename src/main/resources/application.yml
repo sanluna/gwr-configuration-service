@@ -1,0 +1,35 @@
+server:
+  port: 18001
+  servlet:
+    context-path: configservice
+spring:
+  profiles:
+    active: native
+
+logging:
+  level:
+    root: 'WARN'
+    org.springframework.cloud: 'WARN'
+    org.springframework: 'DEBUG'
+    com.sanluna: 'DEBUG'
+  pattern.console: '%clr(%d{yy-MM-dd E HH:mm:ss.SSS}){yellow} %clr(%-5p){cyan} %clr(---){faint} %clr(%-45.45logger{0}){blue} %clr(:){red} %clr(%m){faint}%n'
+
+---
+spring:
+  profiles: cloud
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/sanluna/gwr-config-repo.git
+          clone-on-start: true
+          force-pull: true
+          refresh-rate: 100
+---
+spring:
+  profiles: native
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: file:./src/main/configs
