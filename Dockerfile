@@ -10,7 +10,7 @@ RUN apk add --no-cache bash
 COPY --from=build home/app/target/gwr-configuration-service-1.0.jar app.jar
 RUN sh -c 'touch /app.jar'
 RUN sh -c 'mkdir -p /src/main/configs/'
-COPY ./src/main/configs/*.yml /src/main/configs/
+COPY ./src/main/configs/*.yaml /src/main/configs/
 ENTRYPOINT ["/usr/bin/java"]
 CMD ["-jar", "/app.jar"]
 EXPOSE 18001
