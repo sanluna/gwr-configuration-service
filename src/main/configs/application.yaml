@@ -1,0 +1,73 @@
+spring:
+  cloud:
+    config:
+      allowOverride: true
+      overrideNone: true
+      overrideSystemProperties: false
+  datasource:
+    initialSize: 10
+    maxTotal: 100
+    maxIdle: 20
+    minEvictableIdleTimeMillis: 60000
+    maxWaitMillis: 30000
+    testOnBorrow: true
+    validationQuery: select now()
+    removeAbandonedOnBorrow: true
+    removeAbandonedTimeout: 60
+    logAbandoned: true
+    url: jdbc:h2:mem:dummydb #jdbc:h2:file:~\h2DB\Database;AUTO_SERVER=TRUE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    show-sql: true
+    hibernate:
+      dialect: org.hibernate.dialect.MySQL5Dialect
+      ddl-auto: update
+
+logging:
+  level:
+    root: WARN
+    org.springframework.cloud: WARN
+    org.springframework: WARN
+    com.sanluna: INFO
+  pattern.console: '%clr(%d{yy-MM-dd E HH:mm:ss.SSS}){yellow} %clr([%-5p]){cyan} %clr(---){faint} %clr(%-45.45logger{0}){blue} %clr(:){red} %clr(%m){faint}%n'
+
+security.oauth2.tenantclient.access-token-uri: http://localhost:18000/authentication/oauth/token
+security.oauth2.tenantclient.tenantclient-id: client
+security.oauth2.tenantclient.tenantclient-secret: secret
+gwr.multitenancy: true
+
+security:
+  oauth2:
+    resource:
+      jwt:
+        key-uri: http://localhost:18000/authentication/oauth/token_key
+        key-value: |
+          -----BEGIN PUBLIC KEY-----
+          MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApAiHmqMydGV3GosgorAB
+          dX8jlzOVe+xKWQrhQKBkzQRqoMYtUzJkAbeHm4IbG8E3P22NHHW4XW9e5ReDSkqx
+          o1n7g9rI0VGNiUPwIikf6+IhznjctjUaT+wKpU9OCMtAglq78gLhZcRCxXqLpkLE
+          d9NFQPhcqFnKEzdIa8s+zgN/SfsQTmc7AAB5Jq75gjFG4WRc0ijGj7NfeClqWmjL
+          W9J2EcsrmWHfFAlqAzB9Cz/no1ZmF5zBKKXEMlcUn7iM5eQ+qBshnrqUtO44ziX2
+          wEXJKhlLy4W8VwvrnF596w3S94A2TTI+gF4xEg5GjI4hsUQHUmkf0tAeQyYnesNr
+          TwIDAQAB
+          -----END PUBLIC KEY-----
+
+---
+spring:
+  profiles: cloud
+security.oauth2.tenantclient.access-token-uri: http://gwr-authentication-service/authentication/oauth/token
+
+security:
+  oauth2:
+    tenantclient:
+      access-token-uri: http://gwr-authentication-service/authentication/oauth/token
+    resource:
+      jwt:
+        key-uri: http://gwr-authentication-service/authentication/oauth/token_key
+gwr:
+  tenant:
+    url: http://gwr-tenant-service/tenantservice/tenants/
+  member:
+    url: http://gwr-member-service/memberservice/members/
