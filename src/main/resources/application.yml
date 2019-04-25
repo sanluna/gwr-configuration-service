@@ -25,6 +25,7 @@ spring:
           clone-on-start: true
           force-pull: true
           refresh-rate: 100
+          skipSslValidation: true
 ---
 spring:
   profiles: native
