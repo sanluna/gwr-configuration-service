@@ -32,11 +32,20 @@ logging:
     org.springframework: DEBUG
     com.sanluna: DEBUG
   pattern.console: '%clr(%d{yy-MM-dd E HH:mm:ss.SSS}){yellow} %clr([%-5p]){cyan} %clr(---){faint} %clr(%-45.45logger{0}){blue} %clr(:){red} %clr(%m){faint}%n'
-
-security.oauth2.tenantclient.access-token-uri: http://localhost:18000/authentication/oauth/token
-security.oauth2.tenantclient.tenantclient-id: client
-security.oauth2.tenantclient.tenantclient-secret: secret
-gwr.multitenancy: true
+gwr:
+  tenant:
+    url: http://localhost:18101/tenantservice/tenants/
+  member:
+    url: http://localhost:18100/memberservice/members/
+  auth:
+    url: http://localhost:18000/authentication/
+  product:
+    url: http://localhost:18102/productservice/products/
+  multitenancy: true
+  oauth2:
+    access-token-uri: http://localhost:18000/authentication/oauth/token
+    client-id: client # to be put in secret and read from env variable in every service
+    client-secret: secret # to be put in secret and read from env variable in every service
 
 security:
   oauth2:
@@ -53,16 +62,12 @@ security:
           wEXJKhlLy4W8VwvrnF596w3S94A2TTI+gF4xEg5GjI4hsUQHUmkf0tAeQyYnesNr
           TwIDAQAB
           -----END PUBLIC KEY-----
-
 ---
 spring:
   profiles: cloud
-security.oauth2.tenantclient.access-token-uri: http://gwr-authentication-service/authentication/oauth/token
 
 security:
   oauth2:
-    tenantclient:
-      access-token-uri: http://gwr-authentication-service/authentication/oauth/token
     resource:
       jwt:
         key-uri: http://gwr-authentication-service/authentication/oauth/token_key
@@ -71,3 +76,9 @@ gwr:
     url: http://gwr-tenant-service/tenantservice/tenants/
   member:
     url: http://gwr-member-service/memberservice/members/
+  auth:
+    url: http://gwr-authentication-service/authentication/
+  product:
+    url: http://gwr-product-service/productservice/products/
+  oauth2:
+    access-token-uri: http://gwr-authentication-service/authentication/oauth/token
