@@ -1,0 +1,2 @@
+# gwr-configuration-service
+Spring boot configuration service. Other microservices requests configurations shared on all services and this service responds by sending the application.yaml under configs folder.
