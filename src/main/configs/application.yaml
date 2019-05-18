@@ -31,6 +31,7 @@ logging:
     org.springframework.cloud: WARN
     org.springframework: DEBUG
     com.sanluna: DEBUG
+  GWR: # 0: no logging, 1: log warnings, 2: log info 3: log debug
   pattern.console: '%clr(%d{yy-MM-dd E HH:mm:ss.SSS}){yellow} %clr([%-5p]){cyan} %clr(---){faint} %clr(%-45.45logger{0}){blue} %clr(:){red} %clr(%m){faint}%n'
 gwr:
   tenant:
@@ -41,6 +42,12 @@ gwr:
     url: http://localhost:18000/authentication/
   product:
     url: http://localhost:18102/productservice/products/
+  product-campaign:
+    url: http://localhost:18102/productservice/productcampaigns/
+  product-group:
+    url: http://localhost:18102/productservice/productgroups/
+  product-review:
+    url: http://localhost:18102/productservice/productreviews/
   multitenancy: true
   oauth2:
     access-token-uri: http://localhost:18000/authentication/oauth/token
@@ -80,5 +87,11 @@ gwr:
     url: http://gwr-authentication-service/authentication/
   product:
     url: http://gwr-product-service/productservice/products/
+  product-campaign:
+    url: http://gwr-product-service/productservice/productcampaigns/
+  product-group:
+    url: http://gwr-product-service/productservice/productgroups/
+  product-review:
+    url: http://gwr-product-service/productservice/productreviews/
   oauth2:
     access-token-uri: http://gwr-authentication-service/authentication/oauth/token
